@@ -1,11 +1,24 @@
-
+---
 kind: pipeline
-name: default
+type: docker
+name: linux-amd64
 
+
+platform:
+  arch: amd64
+  os: linux
 steps:
-- name: frontend
-  image: node
+- name: test
+  image: java
   commands:
-  - npm ci
-  
-  - npm run test:unit
+  - clean install
+pipeline:
+  notify:
+    image: drillster/drone-email
+    host: smtp.gmail.com
+    username: rrksrb@gmail.com
+    password: reddy143
+    from: reddi.ramesh@gmail.com
++   attachment: build-result.xml
+    when:
+      status: [ changed, failure ]

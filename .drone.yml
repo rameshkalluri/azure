@@ -1,21 +1,10 @@
----
+
 kind: pipeline
 name: default
 
-platform:
-  os: linux
-  arch: amd64
-
 steps:
-- name: test
-  image: alpine:3.8
+- name: frontend
+  image: node
   commands:
-  - apk add curl
-  - sleep 45
-  - curl http://database:9200
-
-services:
-- name: database
-  image: elasticsearch:5-alpine
-  ports:
-  - 9200
+  - npm ci
+  - npm run test:unit
